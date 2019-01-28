@@ -1,0 +1,99 @@
+﻿@using Abp.Web.Mvc.Extensions
+@model IEnumerable<QxdCtidApiSer.Ctids.Dtos.CtidRecogDto>
+@{
+    ViewBag.Title = "Index";
+}
+@section scripts
+{
+    @Html.IncludeScript("~/Views/Ctids/Index.js")
+}
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>认证首页</h2>
+            </div>
+            <div class="body">
+                <table class="table">
+                    <tr>
+                        <th>@L("AppName")</th>
+                        <th>@L("CustomerNo")</th>
+                        <th>@L("TerminalNo")</th>
+                    </tr>
+                    @foreach (var ctidRecog in Model)
+                    {
+                        <tr>
+                            <td>@ctidRecog.AppName</td>
+                            <td>@ctidRecog.CustomerNo</td>
+                            <td>@ctidRecog.TerminalNo</td>
+                        </tr>
+
+                    }
+                </table>
+                <button type="button" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="modal" data-target="#TwoAndFaceCreateModal">
+                    <i class="material-icons">add</i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="TwoAndFaceCreateModal" tabindex="-1" role="dialog" aria-labelledby="UserCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>@L("CreateTwoAndFace")</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="TwoAndFaceCreateForm" role="form" novalidate class="form-validation">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#create-user-details" data-toggle="tab">2项+人像认证</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-user-details">
+                            <div class="row clearfix" style="margin-top:10px;">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input class="form-control" type="text" name="Name" required minlength="2">
+                                            <label class="form-label">@L("Name")</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="IdCardNo" class="form-control" required />
+                                            <label class="form-label">@L("IdCardNo")</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="file" name="PhotoBuffer" class="form-control" required />
+                                            <label class="form-label">@L("PhotoBuffer")</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Send")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
