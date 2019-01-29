@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
+using AxRZFWTestLib;
 using Qxd.Sdk.Ctid2;
 using QxdCtidApiSer.Ctids.Dtos;
 
@@ -92,6 +93,21 @@ namespace QxdCtidApiSer.Ctids
             return result;
         }
 
+
+
+        /// <summary>
+        /// 获取认证码数据
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string GetRzm(GetRzmInput input)
+        {
+            var axRzfwTest = new AxRZFWTest();//报错：当前线程不在单线程单元中，因此无法实例化 ActiveX 控件“654495dd-3d10-4fe7-afb8-5fb0e106050d”
+            var result = axRzfwTest.RZM_ShuRu(input.Radrom.Length.ToString(), input.Radrom, input.AuthCode);
+            return result;
+        }
+
+
         /// <summary>
         /// 提交认证
         /// </summary>
@@ -121,7 +137,7 @@ namespace QxdCtidApiSer.Ctids
 
 
                 _ctidRecogRepository.Insert(ctidRecog);//插入到数据库
-                
+
             }
             catch (Exception e)
             {

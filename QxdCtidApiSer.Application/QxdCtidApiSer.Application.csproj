@@ -213,6 +213,7 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -238,8 +239,14 @@
     <Compile Include="Ctids\Dtos\CtidRecogDto.cs" />
     <Compile Include="Ctids\Dtos\GetFaceAndWzInput.cs" />
     <Compile Include="Ctids\Dtos\GetFourAndFaceInput.cs" />
+    <Compile Include="Ctids\Dtos\GetRzmInput.cs" />
     <Compile Include="Ctids\Dtos\GetTwoAndFaceInput.cs" />
     <Compile Include="Ctids\ICtidRecogAppService.cs" />
+    <Compile Include="Dtos\DataTablesPagedOutputDto.cs" />
+    <Compile Include="Dtos\PagedAndSortedInputDto.cs" />
+    <Compile Include="Dtos\PagedAndFilteredInputDto.cs" />
+    <Compile Include="Dtos\PagedInputDto.cs" />
+    <Compile Include="Dtos\PagedSortedAndFilteredInputDto.cs" />
     <Compile Include="QxdCtidApiSerApplicationModule.cs" />
     <Compile Include="QxdCtidApiSerAppServiceBase.cs" />
     <Compile Include="Authorization\Accounts\AccountAppService.cs" />

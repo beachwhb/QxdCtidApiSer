@@ -118,5 +118,19 @@ namespace QxdCtidApiSer.Web.Controllers
             var twoAndFace = _ctidRecogAppService.GetTwoAndFace(twoAndFaceInput);
             return Json("");
         }
+
+        /// <summary>
+        /// 获取认证码数据
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetRzm(GetRzmInput input)
+        {
+           var result = _ctidRecogAppService.GetRzm(input);
+            return Json(result);
+        }
+
+
     }
 }

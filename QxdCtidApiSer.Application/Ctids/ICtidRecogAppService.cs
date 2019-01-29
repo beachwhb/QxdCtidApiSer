@@ -45,6 +45,12 @@ namespace QxdCtidApiSer.Ctids
         /// <returns></returns>
         CtidRecogDto GetFaceAndWz(GetFaceAndWzInput input);
 
+        /// <summary>
+        /// 获取认证码数据
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        string GetRzm(GetRzmInput input);
 
         string Test();
 
