@@ -39,18 +39,17 @@ namespace QxdCtidApiSer.Ctids
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public CtidRecogDto GetTwoAndFace(GetTwoAndFaceInput input)
+        public ResultModelDto GetTwoAndFace(GetTwoAndFaceInput input)
         {
             var queryParam = new QueryParam
             {
                 name = input.Name,
                 idcard = input.IdCardNo,
                 cammerPhoto = input.PhotoBuffer,
-                //recogCode = "0x42",
                 recogCode = Ctid.RecoRequestMode.Eleven
             };
 
-            var result = OnlineFr(queryParam);
+            ResultModelDto result = OnlineFr(queryParam);
             return result;
         }
 
@@ -59,37 +58,41 @@ namespace QxdCtidApiSer.Ctids
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public CtidRecogDto GetFourAndFace(GetFourAndFaceInput input)
+        public ResultModelDto GetFourAndFace(GetFourAndFaceInput input)
         {
             var queryParam = new QueryParam
             {
                 name = input.Name,
                 idcard = input.IdCardNo,
-                beginDate = input.UserLifeBegin,
-                endDate = input.UserLifeEnd,
+                beginDate = input.UserLifeBegin.ToString("yyyyMMdd"),
+                endDate = input.UserLifeEnd.ToString("yyyyMMdd"),
                 cammerPhoto = input.PhotoBuffer,
-                //recogCode = "0x12",
                 recogCode = Ctid.RecoRequestMode.Nine
             };
 
-            var result = OnlineFr(queryParam);
+            ResultModelDto result = OnlineFr(queryParam);
             return result;
         }
 
-
-        public CtidRecogDto GetFaceAndWz(GetFaceAndWzInput input)
+        /// <summary>
+        /// 人像+网证
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ResultModelDto GetFaceAndWz(GetFaceAndWzInput input)
         {
             var queryParam = new QueryParam
             {
                 authCode = input.AuthCode,
                 cammerPhoto = input.PhotoBuffer,
+
                 CtidIndex = @"B19FABEA60504FB65F3AA087ED0CE155239A7D8EF9D1BC694F31D0B78E0C48B9.wzMIIB1gYKKoEcz1UGAQQCA6CCAcYwggHCAgEAMYHPMIHMAgEAMD0wMTELMAkGA1UEBhMCQ04xETAPBgNVBAoTCEdMQ1RJRDAxMQ8wDQYDVQQDEwZHTENBMDECCH96wSriUCnPMAsGCSqBHM9VAYItAwR7MHkCIQCVeCUcHBGOzwAN0pKxTunD9+UHNkPJjUbndZ3t6jdvCwIgCaA8VqaEYlLRVtnn7jByr+spvhwOCZWdBVQFodkIkoMEII0IOGOVpZNvpRk4zHbGdzwU/oaXGcOExXMUHzrIOQ24BBAwXnXFmBjPgn2UfrF+7pFAMIHqBgoqgRzPVQYBBAIBMAkGByqBHM9VAWiAgdDG6iMWZAszwVYSX2WRT7O7SbaMAxRFYTg1Sp+OxRUr2OZPjDWKAwysLBEB2sMYCprFLEgDk2h+ZTPSz2LQbhY8xuojFmQLM8FWEl9lkU+zu8bqIxZkCzPBVhJfZZFPs7vG6iMWZAszwVYSX2WRT7O7xuojFmQLM8FWEl9lkU+zu8bqIxZkCzPBVhJfZZFPs7vG6iMWZAszwVYSX2WRT7O7xuojFmQLM8FWEl9lkU+zu8bqIxZkCzPBVhJfZZFPs7vGo0se/hleDHuUPAiPpASA",
                 CtidInfo = @"AwCxn6vqYFBPtl86oIftDOFVI5p9jvnRvGlPMdC3jgxIuTIwMTgwMTIyMTIxMzMzMTQ5AQFsUYlb6JAsewBOFHh2ekBiACAAIAAgACAAIAAgACAyADAAMQA4ADAAMQAyADIAMgAwADMAMQAwADIAMQA1AAjPuPOn8hbjDIX3VHYQu7uiQBJVB83QZT9UA8Kiea9asZ+r6mBQT7ZfOqCH7QzhVSOafY750bxpTzHQt44MSLlQEj+4ml0s19KyUxEAlNyoD/nl80cw0sK2CT22/a6rYQABMEQCIEvGvRzkjuZbxYwLRpm0YCGGnMDPEEn/Sy8XRJrCOeJLAiAUTeZTOkaBzHGlzv1cARcrqsMIboC3sIDti6NXUtKMxwAA",
-                //recogCode = "0x06",
+                
                 recogCode = Ctid.RecoRequestMode.Six
 
             };
-            var result = OnlineFr(queryParam);
+            ResultModelDto result = OnlineFr(queryParam);
             return result;
         }
 
@@ -109,32 +112,44 @@ namespace QxdCtidApiSer.Ctids
 
 
         /// <summary>
-        /// 提交认证
+        /// 提交认证。正确保存结果并提示返回信息，错误不保存并提示
         /// </summary>
         /// <param name="qp"></param>
-
-        private CtidRecogDto OnlineFr(QueryParam qp)
+        private ResultModelDto OnlineFr(QueryParam qp)
         {
             var ctid = new Qxd.Sdk.Ctid2.Ctid(new InitSetParam());
             var recogModel = new CtidRecogModel();
 
             var resultModel = ctid.GetCtidRecogModel(qp, ref recogModel);
 
+            //如果错误
             if (resultModel.ResultCode != 0)
             {
-                //如果有错误，输出日志
-                Logger.Info("Creating a task for input: " + qp);
+                Logger.Info("认证失败: " + qp);
+                return ObjectMapper.Map<ResultModelDto>(resultModel);
             }
-
-            //var authJson = Newtonsoft.Json.JsonConvert.SerializeObject(recogModel);
+            
 
             //成功就把结果写入数据库
             try
             {
-                var ctidRecog = new CtidRecog();
-                ctidRecog.CustomerNo = recogModel.CustomerNO;
-                ctidRecog.AppName = recogModel.AppName;
+                var ctidRecog = new CtidRecog
+                {
+                    CustomerNo = recogModel.CustomerNO,
+                    AppName = recogModel.AppName,
+                    TerminalNo = recogModel.TerminalNO,
+                    TimeStamp = recogModel.TimeStamp,
+                    BusinessSerialNumber = recogModel.BusinessSerialNumber,
+                    ResultCode = recogModel.ResultCode,
+                    ResultMessage = recogModel.ResultMessage,
+                    AuthResult = recogModel.AuthResult,
+                    Similarity = recogModel.Similarity,
+                    ReservedData = recogModel.ReservedData
+                };
 
+
+
+                //var ctidRecog = ObjectMapper.Map<CtidRecog>(recogModel);
 
                 _ctidRecogRepository.Insert(ctidRecog);//插入到数据库
 
@@ -144,12 +159,24 @@ namespace QxdCtidApiSer.Ctids
                 Console.WriteLine(e);
                 throw;
             }
-            return ObjectMapper.Map<CtidRecogDto>(recogModel);
 
+            return ObjectMapper.Map<ResultModelDto>(resultModel);
         }
 
         /// <summary>
-        /// 
+        /// 导出认证数据
+        /// </summary>
+        public void GetCtidRecogToExecl()
+        {
+            //导入数据
+
+            var ctidRecogs = _ctidRecogRepository.GetAllList();
+
+        }
+
+
+        /// <summary>
+        /// 测试
         /// </summary>
         /// <returns></returns>
         public string Test()

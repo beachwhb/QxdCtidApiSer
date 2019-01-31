@@ -60,6 +60,24 @@
     <text name="QxdCtidApiSer">仟信德身份认证API服务</text>
     <text name="Ctids">认证</text>
 
+    <text name="CustomerNo">客户号</text>
     <text name="AppName">应用名称</text>
+    <text name="TerminalNo">终端号</text>
+    <text name="TimeStamp">时间戳</text>
+    <text name="BusinessSerialNumber">业务流水号</text>
+    <text name="ResultCode">结果码</text>
+    <text name="ResultMessage">结果信息</text>
+    <text name="AuthResult">认证结果</text>
+    <text name="Similarity">相识度</text>
+    <text name="ReservedData">保留数据</text>
+    <text name="CreationTime">创建时间</text>
+
+    <text name="CreateTwoAndFace">2项信息+人像</text>
+
+    <text name="IdCardUserName">身份证姓名</text>
+    <text name="UserLifeBegin">身份证有效期开始</text>
+    <text name="UserLifeEnd">身份证有效期截止</text>
+   
+    
   </texts>
 </localizationDictionary>

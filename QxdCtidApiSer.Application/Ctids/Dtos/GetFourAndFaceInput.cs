@@ -17,9 +17,9 @@ namespace QxdCtidApiSer.Ctids.Dtos
         [Required]
         public string IdCardNo { get; set; }
         [Required]
-        public string UserLifeBegin { get; set; }
+        public DataType UserLifeBegin { get; set; }
         [Required]
-        public string UserLifeEnd { get; set; }
+        public DataType UserLifeEnd { get; set; }
         [Required]
         public string PhotoBuffer { get; set; }
     }

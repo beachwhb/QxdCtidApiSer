@@ -65,6 +65,9 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus.Core, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Core.1.5.4\lib\net46\EPPlus.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.JITClientCOMAPILib">
       <HintPath>..\Import\Dll\Interop.JITClientCOMAPILib.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -130,6 +133,7 @@
     <Reference Include="Nito.Disposables, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.Disposables.2.0.0\lib\netstandard2.0\Nito.Disposables.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="Qxd.Sdk.Ctid2, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Import\Dll\Qxd.Sdk.Ctid2.dll</HintPath>
@@ -194,6 +198,7 @@
       <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
@@ -241,6 +246,7 @@
     <Compile Include="Ctids\Dtos\GetFourAndFaceInput.cs" />
     <Compile Include="Ctids\Dtos\GetRzmInput.cs" />
     <Compile Include="Ctids\Dtos\GetTwoAndFaceInput.cs" />
+    <Compile Include="Ctids\Dtos\ResultModelDto.cs" />
     <Compile Include="Ctids\ICtidRecogAppService.cs" />
     <Compile Include="Dtos\DataTablesPagedOutputDto.cs" />
     <Compile Include="Dtos\PagedAndSortedInputDto.cs" />
